@@ -1,0 +1,46 @@
+<!-- Save as index.html and open in your browser -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flower Drawing</title>
+  <style>
+    body { background: #262626; }
+    canvas { display: block; margin: 0 auto; background: #262626; }
+  </style>
+</head>
+<body>
+  <canvas id="flower" width="800" height="800"></canvas>
+  <script>
+    const canvas = document.getElementById('flower');
+    const ctx = canvas.getContext('2d');
+    ctx.lineWidth = 1;
+
+    const warna_bunga = ['#FF78C4', '#97DBAE', '#C1EFFF', '#F0B86E'];
+
+    function drawArc(x, y, radius, startAngle, endAngle, color, rotation) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(rotation);
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      ctx.arc(0, 0, radius, startAngle, endAngle);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    let centerX = 400, centerY = 400;
+
+    for (let i = 0; i < 3; i++) {
+      let angle = i * 30 * Math.PI / 180;
+      for (let n = 0; n < 400; n++) {
+        let color = warna_bunga[n % 4];
+        let radius = 190 - n / 2;
+        drawArc(centerX, centerY, radius, 0, Math.PI / 2, color, angle);
+        angle += Math.PI / 2;
+        drawArc(centerX, centerY, radius, 0, Math.PI / 2, color, angle);
+      }
+    }
+  </script>
+</body>
+</html>
