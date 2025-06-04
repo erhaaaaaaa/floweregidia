@@ -1,0 +1,75 @@
+<!-- Save this as flower.html and open in your browser -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flower Drawing</title>
+  <style>
+    body { background: #262626; }
+    canvas { display: block; margin: 0 auto; background: #262626; }
+  </style>
+</head>
+<body>
+  <canvas id="flower" width="800" height="800"></canvas>
+  <script>
+    const canvas = document.getElementById('flower');
+    const ctx = canvas.getContext('2d');
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = '#540d6e';
+
+    const warna_bunga = ['#FF78C4', '#97DBAE', '#C1EFFF', '#F0B86E'];
+
+    function drawCircle(x, y, radius, startAngle, endAngle, color) {
+      ctx.beginPath();
+      ctx.arc(x, y, radius, startAngle, endAngle);
+      ctx.strokeStyle = color;
+      ctx.stroke();
+    }
+
+    // Turtle-like state
+    let x = 400, y = 400;
+    let angle = 0;
+
+    function moveTo(newX, newY) {
+      x = newX;
+      y = newY;
+    }
+
+    function left(deg) {
+      angle -= deg;
+    }
+
+    function toRadians(deg) {
+      return deg * Math.PI / 180;
+    }
+
+    for (let i = 0; i < 3; i++) {
+      x = 400; y = 400; angle = i * 30;
+      for (let n = 0; n < 400; n++) {
+        ctx.strokeStyle = warna_bunga[n % 4];
+        // Draw arc (quarter circle)
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(toRadians(angle));
+        ctx.beginPath();
+        ctx.arc(0, 0, 190 - n / 2, 0, Math.PI / 2);
+        ctx.stroke();
+        ctx.restore();
+
+        angle += 90;
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(toRadians(angle));
+        ctx.beginPath();
+        ctx.arc(0, 0, 190 - n / 2, 0, Math.PI / 2);
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.strokeStyle = warna_bunga[n % 4];
+      }
+      angle += 30;
+    }
+  </script>
+</body>
+</html>
